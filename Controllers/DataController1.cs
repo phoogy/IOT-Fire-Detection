@@ -9,11 +9,11 @@ namespace IOT_Fire_Detection.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class dataController : ControllerBase
+    public class DataController : ControllerBase
     {
         private readonly DataService dataService;
 
-        public dataController(){
+        public DataController(){
             dataService = new DataService();
         }
 
@@ -27,7 +27,7 @@ namespace IOT_Fire_Detection.Controllers
         [HttpGet]
         [Route("lastminute")]
         public async Task<IEnumerable<object>> GetLastMinute(){
-            return await dataService.getLastMinute();
+            return await dataService.get60Seconds(DateTime.Now.AddSeconds(-60));
         }
 
         // GET: api/data/lasthour
@@ -35,7 +35,7 @@ namespace IOT_Fire_Detection.Controllers
         [Route("lasthour")]
         public async Task<IEnumerable<object>> GetLastHour()
         {
-            return await dataService.getLastHour();
+            return await dataService.get60Minutes(DateTime.Now.AddMinutes(-60));
         }
 
         // GET: api/data/lastday
@@ -43,7 +43,7 @@ namespace IOT_Fire_Detection.Controllers
         [Route("lastday")]
         public async Task<IEnumerable<object>> GetLastDay()
         {
-            return await dataService.getLastDay();
+            return await dataService.get24Hours(DateTime.Now.AddHours(-24));
         }
 
         // GET: api/data/lastweek
@@ -51,7 +51,15 @@ namespace IOT_Fire_Detection.Controllers
         [Route("lastweek")]
         public async Task<IEnumerable<object>> GetLastWeek()
         {
-            return await dataService.getLastWeek();
+            return await dataService.get7Days(DateTime.Now.AddDays(-7));
+        }
+
+        // GET: api/data/lastmonth
+        [HttpGet]
+        [Route("lastmonth")]
+        public async Task<IEnumerable<object>> GetLastMonth()
+        {
+            return await dataService.get30Days(DateTime.Now.AddDays(-30));
         }
     }
 }
