@@ -1,302 +1,184 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "IOT Fire Detection";
 }
 <div class="container">
     <h1>IOT Fire Detection</h1>
     <hr />
     <div class="row">
+
+        <div class="col-xs-12 col-sm-8">
+            <div class="well well-sm">
+                <h1 class="text-center text-warning" id="predictionBig">0</h1>
+                <h1 class="text-center text-warning">Potential Fire Level</h1>
+            </div>
+        </div>
         <div class="col-xs-12 col-sm-4">
             <div class="well well-sm">
                 <table>
                     <thead></thead>
                     <tbody>
                         <tr>
-                            <td><label>Temperature:</label></td>
-                            <td class="text-right" id="temp">20&#176; C</td>
+                            <td><label>Last Updated:</label></td>
+                            <td class="text-right" id="lastUpdated"></td>
                         </tr>
                         <tr>
-                            <td><label>Humidity:</label></td>
-                            <td class="text-right" id="humidity">50</td>
+                            <td><label>Potential Fire Level:</label></td>
+                            <td class="text-right" id="prediction">0</td>
+                        </tr>
+                        <tr>
+                            <td><label>Temperature:</label></td>
+                            <td class="text-right" id="temp">0°C</td>
                         </tr>
                         <tr>
                             <td><label>Smoke and Gas Level:</label></td>
-                            <td class="text-right" id="smoke">9</td>
-                        </tr>
-                        <tr>
-                            <td><label>Fire Prediction:</label></td>
-                            <td class="text-right" id="prediction">85%</td>
+                            <td class="text-right" id="smoke">0</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-8">
-            <div class="well well-sm">
-                <h1 class="text-center text-danger">85%</h1>
-                <h1 class="text-center text-danger">Fire Prediction</h1>
-            </div>
-        </div>
-
     </div>
 </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prediction Last 60 Seconds</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="prediction1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Temperature Last 60 Seconds</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="temp1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Smoke and Gas Level Last 60 Seconds</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="smoke1"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperature Last 60 Seconds</h3>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prediction Last 60 Minutes</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="prediction2"></canvas>
+                </div>
             </div>
-            <div class="panel-body">
-                <canvas id="temp1"></canvas>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Temperature Last 60 Minutes</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="temp2"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Smoke and Gas Level Last 60 Minutes</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="smoke2"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperature Last 60 Minutes</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="temp2"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperature Last 24 Hours</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="temp3"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Humidity Last 60 Seconds</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="humidity1"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Humidity Last 60 Minutes</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="humidity2"></canvas>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prediction Last 24 Hours</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="prediction3"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Humidity Last 24 Hours</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="humidity3"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Smoke and Gas Level Last 60 Seconds</h3>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Temperature Last 24 Hours</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="temp3"></canvas>
+                </div>
             </div>
-            <div class="panel-body">
-                <canvas id="smoke1"></canvas>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Smoke and Gas Level Last 24 Hours</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="smoke3"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Smoke and Gas Level Last 60 Minutes</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="smoke2"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Smoke and Gas Level Last 24 Hours</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="smoke3"></canvas>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prediction Last 7 Days</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="prediction4"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Prediction Last 60 Seconds</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="prediction1"></canvas>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Temperature Last 7 Days</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="temp4"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Prediction Last 60 Minutes</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="prediction2"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Prediction Last 24 Hours</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="prediction3"></canvas>
+        <div class="col-sm-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Smoke and Gas Level Last 7 Days</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="smoke4"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
-<script>
-
-
-
-
-    //$.ajax({
-    //    url: "/api/temp/lastminute",
-    //    cache: false,
-    //    success: function (response) {
-    //        var labels = [];
-    //        var data = [];
-    //        response.forEach(function (record) {
-    //            labels.push((new moment(record.timestamp).format(labelFormat)));
-    //            data.push(record.temp);
-    //        });
-    //        setuptemp($('#temp1'), 60, 's', 'hh:mm:ss', 1, labels, data);
-    //    }
-    //});
-
-
-
-    setuptemp('temp1');
-    setuptemp('temp2');
-    setuptemp('temp3');
-
-    function setuptemp(canvasId) {
-
-        var ctx = $('#' + canvasId);
-        var labelFormat, interval, url;
-        switch (canvasId) {
-            case 'temp1':
-                url = '/api/temp/lastminute';
-                labelFormat = 'hh:mm:ss';
-                interval = 1;
-                break;
-            case 'temp2':
-                url = '/api/temp/lasthour';
-                labelFormat = 'hh:mm';
-                interval = 60;
-                break;
-            case 'temp3':
-                url = '/api/temp/lastday';
-                labelFormat = 'hh:mm';
-                interval = 3600;
-                break;
-            default:
-                return;
-        }
-
-        $.ajax({
-            url: url,
-            cache: false,
-            success: function (response) {
-                var labels = [];
-                var data = [];
-                response.forEach(function (record) {
-                    labels.push((new moment(record.timestamp).format(labelFormat)));
-                    data.push(record.temp);
-                });
-                var chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: data,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    suggestedMin: 10,
-                                    suggestedMax: 30
-                                }
-                            }]
-                            //,
-                            //xAxes: [{
-                            //    ticks: {
-                            //        maxRotation: 90,
-                            //        minRotation: 90
-                            //    }
-                            //}]
-
-                        },
-                        animation: {
-                            duration: 0 // general animation time
-                        },
-                        hover: {
-                            animationDuration: 0 // duration of animations when hovering an item
-                        },
-                        responsiveAnimationDuration: 0, // animation duration after a resize
-                        legend: {
-                            display: false,
-                        }
-                    }
-                });
-
-                setInterval(function () {
-                    $.ajax({
-                        url: "/api/temp",
-                        cache: false,
-                        success: function (response) {
-                            chart.data.labels.shift();
-                            chart.data.datasets.forEach((dataset) => {
-                                dataset.data.shift();
-                            });
-                            var newTemp = response.temp;
-                            chart.data.labels.push((new moment(response.timestamp).format(labelFormat)));
-                            chart.data.datasets.forEach((dataset) => {
-                                dataset.data.push(newTemp);
-                            });
-                            $('#temp').html(newTemp);
-                            chart.update();
-                        }
-                    });
-                }, interval * 1000);
-            }
-        });
-
-    }
-</script>
+    <script>
+        setupLastMinute();
+        setupLastHour();
+        setupLastDay();
+        setupLastWeek();
+    </script>
 }
