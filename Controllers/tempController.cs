@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IOT_Fire_Detection.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,6 +78,31 @@ namespace IOT_Fire_Detection.Controllers
                 list.Add(data);
             }
             return list;
+        }
+
+        // GET: api/temp/tables
+        [HttpGet]
+        [Route("tables")]
+        public async Task<object> GetTablesAsync()
+        {
+
+            var abc = new temp();
+            var response = await abc.getLatestTemp();
+
+            return response;
+
+            //var list = new List<object>();
+
+            //// test data
+            //var now = DateTime.Now;
+            //var r = new Random();
+            //for (int i = 0; i < 24; i++)
+            //{
+            //    var temp = r.Next(20, 25);
+            //    var data = new { timestamp = now.AddDays(-1).AddHours(i), temp = temp };
+            //    list.Add(data);
+            //}
+            //return list;
         }
     }
 }
